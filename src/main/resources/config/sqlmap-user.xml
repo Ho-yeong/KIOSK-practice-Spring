@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userDAO">
+	<select id="selectAll" resultType="com.itbank.dao.UserVO">
+		select * from users order by usernum desc
+	</select>
+	
+	<insert id="insert" parameterType="com.itbank.dao.UserVO">
+		insert into users (name, pnum) values (#{name}, #{pnum})
+	</insert>
+	
+	<delete id="delete" parameterType="java.util.List">
+		DELETE FROM users
+		    WHERE
+    		<foreach collection="list" item="item" separator="or" index="index">
+        		usernum = #{item}
+   			</foreach>
+	</delete>
+	
+	<update id="updateStamp" parameterType="map">
+		update users set stamp = stamp + #{number} where name = #{name}
+	</update>
+	
+	<update id="updateCancel" parameterType="map">
+		update users set stamp = stamp - #{number} where name = #{name}
+	</update>
+	
+	
+	<!-- 로그인 -->
+	<select id="login" resultType="com.itbank.dao.MemberVO" parameterType="hashmap">
+		select * from member2 where email = #{userid} and password = #{userpw}
+	</select>
+	
+</mapper>

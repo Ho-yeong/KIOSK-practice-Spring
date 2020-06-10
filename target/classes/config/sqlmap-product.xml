@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="productDAO">
+	<select id="selectAll" resultType="com.itbank.dao.ProductVO">
+		select * from product order by time desc
+	</select>
+	
+	<insert id="insert" parameterType="com.itbank.dao.ProductVO">
+		insert into product (name, amount, price) values (#{name}, #{amount}, #{price})
+	</insert>
+	
+	<delete id="delete" parameterType="java.util.List">
+		DELETE FROM product
+		    WHERE
+    		<foreach collection="list" item="item" separator="or" index="index">
+        		name = #{item}
+   			</foreach>
+
+	</delete>
+	
+	<select id="selectOne" parameterType="String" resultType="com.itbank.dao.ProductVO">
+		select * from product where name = #{name}
+	</select>	
+	
+	<update id="update" parameterType="com.itbank.dao.ProductVO">
+		update product set amount = #{amount}, price = #{price} where name = #{name}
+	</update>
+	
+	<update id="updateWithSales" parameterType="hashmap">
+		update product set amount = amount - #{amount} where name = #{name}
+	</update>
+	
+	<update id="updateCancel" parameterType="hashmap">
+		update product set amount = amount + ${amount} where name = #{name}
+	</update>
+	
+</mapper>

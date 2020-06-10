@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="salesDAO">
+	<select id="selectAll" resultType="com.itbank.dao.SalesVO">
+		select * from sales order by time desc
+	</select>
+	
+	<insert id="insert" parameterType="com.itbank.dao.SalesVO">
+		insert into sales (name, amount, price, buyer, result) values (#{name}, #{amount}, #{price}, #{buyer}, #{result})
+	</insert>
+	
+</mapper>
